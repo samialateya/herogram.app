@@ -10,7 +10,7 @@ const router = Router();
 
 const pollController = new PollController();
 
-router.get('/', async (req: ContextRequest, res: Response) => {
+router.post('/', async (req: ContextRequest, res: Response) => {
   formValidator.validate(pollSchema, req.body);
   const requestData: PollRequest = {
     question: req.body.question,
@@ -18,12 +18,19 @@ router.get('/', async (req: ContextRequest, res: Response) => {
     expiresAt: req.body.expiresAt,
   };
 
+  const pollId = await pollController.createPoll(requestData);
+  res.status(201).json({ pollId });
+});
+
+router.post('/:pollId/vote', async (req: ContextRequest, res: Response) => {
+  const pollId = req.params.pollId;
+
   if (!req.context?.authUser) {
     throw new AuthenticationError();
   }
 
-  await pollController.createPoll(req.context.authUser, requestData);
-  res.status(204).end();
+  await pollController.vote(req.context.authUser, pollId);
+  res.status(200).end();
 });
 
 export default router;

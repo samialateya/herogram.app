@@ -1,6 +1,14 @@
 import { Client } from 'pg';
 import { configManager } from '../../helpers/Config';
 
+export type QueryOptions = {
+  table: string;
+  columns: string;
+  where?: string;
+  orderBy?: string;
+  limit?: string;
+};
+
 class PostgresSQL {
   private client: Client;
 
@@ -30,6 +38,13 @@ class PostgresSQL {
     const query = `INSERT INTO ${table} (${columns}) VALUES (${values})`;
     const result = await this.client.query(query);
     return result;
+  }
+
+  async query<T>(options: QueryOptions): Promise<T[]> {
+    await this.connect();
+    const query = `SELECT ${options.columns} FROM ${options.table} ${options.where ?? ''} ${options.orderBy ?? ''} ${options.limit ?? ''}`;
+    const result = await this.client.query(query);
+    return result.rows;
   }
 }
 

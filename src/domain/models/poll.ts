@@ -20,4 +20,29 @@ export class PollModel {
       });
     }
   }
+
+  async getByUUID(pollUUID: string): Promise<Poll | null> {
+    try {
+      const poll = await postgresSQL.query<Poll>({
+        table: this.table,
+        columns: 'id',
+        where: `WHERE uuid = '${pollUUID}'`,
+        limit: 'LIMIT 1',
+      });
+      if (poll.length === 0) {
+        return null;
+      }
+      return poll[0];
+    } catch (error) {
+      if ((error as Error).message.includes('invalid input syntax for type uuid')) {
+        return null;
+      }
+      throw new DatabaseError('Failed to get poll', {
+        cause: (error as Error).message,
+        hint: 'Check database connection and configuration',
+        detail: 'Error occurred while querying poll from the database',
+        pollUUID,
+      });
+    }
+  }
 }

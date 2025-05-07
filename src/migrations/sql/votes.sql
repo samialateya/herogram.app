@@ -3,7 +3,6 @@ CREATE TABLE
     id SERIAL PRIMARY KEY,
     uuid UUID DEFAULT gen_random_uuid() NOT NULL,
     device_id VARCHAR(250) NOT NULL,
-    vote INT NOT NULL,
     poll_id INT NOT NULL,
 
     UNIQUE (device_id, poll_id),
