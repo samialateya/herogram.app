@@ -5,11 +5,16 @@ import { v4 as uuid } from 'uuid';
 
 export class AnonController {
   async getAccessToken(anonRequest: AnonRequest): Promise<string> {
-    const tokenId = uuid();
-    const accessToken = jwtManager.createAccessToken(tokenId, anonRequest);
-    
+    const authUser = {
+      tokenId: uuid(),
+      deviceId: anonRequest.deviceId,
+      userAgent: anonRequest.userAgent,
+    };
+
+    const accessToken = jwtManager.createAccessToken(authUser);
+
     const authModel = new AuthModel();
-    await authModel.saveAccessToken(tokenId, anonRequest);
+    await authModel.saveAccessToken(authUser);
 
     return accessToken;
   }

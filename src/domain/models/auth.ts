@@ -1,16 +1,12 @@
 import { DatabaseError } from '../../errors/DatabaseError';
 import { ACCESS_TOKEN_EXPIRATION } from '../../constants';
 import { redisClient } from '../../database/cache/redis';
-import { AnonRequest } from '../../routes/v1/auth/anon/types';
+import { AuthUser } from '../../types/request/auth';
 
 export class AuthModel {
-  async saveAccessToken(tokenId: string, anonRequest: AnonRequest) {
-    const cacheKey = `anon:${tokenId}`;
-    const cacheValue = JSON.stringify({
-      deviceId: anonRequest.deviceId,
-      userAgent: anonRequest.userAgent,
-      tokenId,
-    });
+  async saveAccessToken(authUser: AuthUser) {
+    const cacheKey = `anon:${authUser.tokenId}`;
+    const cacheValue = JSON.stringify(authUser);
 
     try {
       await redisClient.save(cacheKey, cacheValue, ACCESS_TOKEN_EXPIRATION);

@@ -11,7 +11,7 @@ class PostgresSQL {
     this.client = new Client(config);
   }
 
-  async connect() {
+  private async connect() {
     if (this.connected) {
       return;
     }
@@ -25,16 +25,8 @@ class PostgresSQL {
     }
   }
 
-  async disconnect() {
-    if (!this.connected) {
-      return;
-    }
-
-    await this.client.end();
-    this.connected = false;
-  }
-
   async insert(table: string, columns: string, values: string) {
+    await this.connect();
     const query = `INSERT INTO ${table} (${columns}) VALUES (${values})`;
     const result = await this.client.query(query);
     return result;

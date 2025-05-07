@@ -1,13 +1,18 @@
-import { sign } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 import { configManager } from './Config';
-import { AnonRequest } from '../routes/v1/auth/anon/types';
 import { ACCESS_TOKEN_EXPIRATION } from '../constants';
+import { AuthUser } from '../types/request/auth';
 
 class JWTManager {
-  createAccessToken(tokenId: string, anonRequest: AnonRequest): string {
+  createAccessToken(authUser: AuthUser): string {
     const accessTokenSecret = configManager.getJWTConfig().accessTokenSecret;
-    const accessToken = sign({ tokenId, ...anonRequest }, accessTokenSecret, { expiresIn: ACCESS_TOKEN_EXPIRATION });
+    const accessToken = sign(authUser, accessTokenSecret, { expiresIn: ACCESS_TOKEN_EXPIRATION });
     return accessToken;
+  }
+
+  verifyAccessToken<T>(token: string): T {
+    const accessTokenSecret = configManager.getJWTConfig().accessTokenSecret;
+    return verify(token, accessTokenSecret) as T;
   }
 }
 
