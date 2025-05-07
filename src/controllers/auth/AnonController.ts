@@ -1,4 +1,4 @@
-import { AuthModel } from '../../domain/models/auth';
+import { AuthModel } from '../../domain/models/Auth';
 import { jwtManager } from '../../helpers/jwt';
 import { AnonRequest } from '../../routes/v1/auth/anon/types';
 import { v4 as uuid } from 'uuid';

@@ -7,6 +7,13 @@ interface SchemaWithErrorMessage extends Schema {
 
 type Data = Record<string, number | string>;
 
+/**
+ * FormValidator class for validating data against a schema.
+ * 
+ * This class is used to validate data against a schema with error messages.
+ * It throws a BadRequestError with the error messages if the validation fails.
+ * 
+ */
 class FormValidator {
   private validator = new Validator();
 

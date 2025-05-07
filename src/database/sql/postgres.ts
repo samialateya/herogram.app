@@ -9,6 +9,22 @@ export type QueryOptions = {
   limit?: string;
 };
 
+/**
+ * PostgresSQL class for managing Postgres database connections and operations.
+ * 
+ * This class provides a simplified interface for common database operations
+ * such as inserting data and running queries against a PostgreSQL database.
+ * It manages connection state internally and automatically connects when needed.
+ * 
+ * @class PostgresSQL
+ * @example
+ * const postgres = new PostgresSQL();
+ * const users = await postgres.query<User>({
+ *   table: 'users',
+ *   columns: '*',
+ *   where: 'WHERE active = true'
+ * });
+ */
 class PostgresSQL {
   private client: Client;
 

@@ -5,6 +5,18 @@ import { CacheConfig } from '../types/config/cache';
 
 config();
 
+/**
+ * ConfigManager is responsible for managing and providing access to configuration
+ * settings used throughout the application.
+ * 
+ * It handles configuration for:
+ * - Database connection (host, port, user, password, database name)
+ * - JWT authentication (access token secret)
+ * - Cache system (Redis URL)
+ * 
+ * The class centralizes access to environment variables and provides default values
+ * when environment variables are not defined.
+ */
 class ConfigManager {
   private dbConfig: DBConfig;
 

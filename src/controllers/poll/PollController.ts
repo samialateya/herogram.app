@@ -1,9 +1,9 @@
 import { Poll } from '../../domain/entities/poll';
-import { PollModel } from '../../domain/models/poll';
+import { PollModel } from '../../domain/models/Poll';
 import { PollRequest } from '../../routes/v1/poll/types';
 import { v4 as uuid } from 'uuid';
 import { AuthUser } from '../../types/request/auth';
-import { VoteModel } from '../../domain/models/vote';
+import { VoteModel } from '../../domain/models/Vote';
 import { NotFoundError } from '../../errors/NotFoundError';
 
 export class PollController {

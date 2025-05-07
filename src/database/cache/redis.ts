@@ -1,6 +1,14 @@
 import { configManager } from '../../helpers/Config';
 import { Redis } from 'ioredis';
 
+/**
+ * RedisClient class for managing Redis cache operations.
+ * 
+ * This class provides an abstraction for connecting to a Redis server
+ * and performing basic cache operations like saving data with optional expiration.
+ * 
+ * @class RedisClient
+ */
 class RedisClient {
   private url: string;
 
