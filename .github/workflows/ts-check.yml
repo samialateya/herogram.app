@@ -16,6 +16,5 @@ jobs:
           node-version: "22"
       - name: Install Dependencies & Run Linter
         run: |
-          cd event-tracker
           npm ci
           npm run ts-check
