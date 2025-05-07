@@ -33,4 +33,21 @@ router.post('/:pollId/vote', async (req: ContextRequest, res: Response) => {
   res.status(200).end();
 });
 
+router.get('/:pollId', async (req: ContextRequest, res: Response) => {
+  const pollId = req.params.pollId;
+
+  if (!req.context?.authUser) {
+    throw new AuthenticationError();
+  }
+
+  const poll = await pollController.getPoll(pollId);
+  res.status(200).json({
+    id: poll.uuid,
+    question: poll.question,
+    options: poll.options,
+    expiresAt: poll.expiresat,
+    votes: poll.votes?.length || 0,
+  });
+});
+
 export default router;

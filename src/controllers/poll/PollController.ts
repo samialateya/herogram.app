@@ -12,12 +12,21 @@ export class PollController {
       uuid: uuid(),
       question: pollRequest.question,
       options: pollRequest.options,
-      expiresAt: pollRequest.expiresAt,
+      expiresat: pollRequest.expiresAt,
     };
 
     const pollModel = new PollModel();
     await pollModel.create(poll);
     return poll.uuid as string;
+  }
+
+  async getPoll(pollUUID: string): Promise<Poll> {
+    const pollModel = new PollModel();
+    const poll = await pollModel.getWithVotes(pollUUID);
+    if (!poll || !poll.id) {
+      throw new NotFoundError('Poll not found');
+    }
+    return poll;
   }
 
   async vote(authUser: AuthUser, pollUUID: string): Promise<void> {

@@ -3,6 +3,5 @@ export type Vote = {
   uuid?: string;
   userId: string;
   pollId: string;
-  vote: number
   createdAt?: Date;
 };

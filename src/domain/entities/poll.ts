@@ -5,7 +5,7 @@ export type Poll = {
   uuid?: string;
   question: string;
   options: string[];
-  expiresAt: Date;
+  expiresat: Date;
 
   votes?: Vote[]
 };

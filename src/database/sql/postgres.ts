@@ -46,6 +46,12 @@ class PostgresSQL {
     const result = await this.client.query(query);
     return result.rows;
   }
+
+  async customQueryFetcher<T>(query: string): Promise<T[]> {
+    await this.connect();
+    const result = await this.client.query(query);
+    return result.rows;
+  }
 }
 
 const postgresSQL = new PostgresSQL();
