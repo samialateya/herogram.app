@@ -11,6 +11,8 @@ const router = Router();
 const pollController = new PollController();
 
 router.post('/', async (req: ContextRequest, res: Response) => {
+  // TODO: Add rate limiting for creating polls per user
+
   formValidator.validate(pollSchema, req.body);
   const requestData: PollRequest = {
     question: req.body.question,
@@ -23,6 +25,8 @@ router.post('/', async (req: ContextRequest, res: Response) => {
 });
 
 router.post('/:pollId/vote', async (req: ContextRequest, res: Response) => {
+  // TODO: Add rate limiting for voting per user
+
   const pollId = req.params.pollId;
 
   if (!req.context?.authUser) {

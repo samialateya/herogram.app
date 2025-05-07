@@ -8,6 +8,7 @@ const router = Router();
 const anonController = new AnonController();
 
 router.post('/anon', async (req: Request, res: Response) => {
+  // TODO: Add rate limiting for issuing access tokens per deviceId
   formValidator.validate(anonSchema, req.body);
 
   const requestData: AnonRequest = {
