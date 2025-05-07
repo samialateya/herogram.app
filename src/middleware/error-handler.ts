@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Request, Response, NextFunction } from 'express';
 import { logger } from '../helpers/Logger';
 import { ExposableError } from '../errors/ExposableError';
