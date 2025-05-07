@@ -1,10 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Request, Response, NextFunction } from 'express';
 import { logger } from '../helpers/Logger';
 import { ExposableError } from '../errors/ExposableError';
+import { SuppressedError } from '../errors/SuppressedError';
 
 export const errorHandlerMiddleware = (err: Error, req: Request, res: Response, next: NextFunction): Response => {
   if (err instanceof ExposableError) {
+    return res.status(err.statusCode).json({
+      message: err.message,
+      errors: err.errors,
+    }).end();
+  }
+
+  if (err instanceof SuppressedError) {
     return res.status(err.statusCode).end();
   }
 

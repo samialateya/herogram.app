@@ -1,11 +1,13 @@
-import { logger } from '../helpers/Logger';
-
-export class ExposableError extends Error {
+export abstract class ExposableError extends Error {
   public statusCode = 500;
 
-  constructor(message: string, error: Error, data: object = {}) {
+  public errors: object = {};
+
+  public message = 'Error';
+
+  constructor(message: string, errors: object = {}) {
     super(message);
-    this.name = 'ExposableError';
-    logger.error(error, data, message);
+    this.errors = errors;
+    this.message = message;
   }
 }

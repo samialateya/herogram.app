@@ -1,0 +1,10 @@
+{
+  "id": "anon-request",
+  "type": "object",
+  "properties": {
+    "deviceId": {
+      "type": "string"
+    }
+  },
+  "required": ["deviceId"]
+}
