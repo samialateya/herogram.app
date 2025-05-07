@@ -1,10 +1,10 @@
 import { ExposableError } from './ExposableError';
 
-export class BadRequestError extends ExposableError {
+export class NotFoundError extends ExposableError {
   constructor(message: string, errors: object = {}) {
     super(message, errors);
-    this.name = 'BadRequestError';
-    this.statusCode = 400;
+    this.name = 'NotFoundError';
+    this.statusCode = 404;
     this.errors = errors;
     this.message = message;
   }

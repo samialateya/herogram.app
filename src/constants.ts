@@ -1,0 +1,1 @@
+export const ACCESS_TOKEN_EXPIRATION = 5 * 60; // 5 minutes

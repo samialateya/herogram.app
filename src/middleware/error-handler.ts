@@ -2,9 +2,21 @@
 import { Request, Response, NextFunction } from 'express';
 import { logger } from '../helpers/Logger';
 import { ExposableError } from '../errors/ExposableError';
+import { SuppressedError } from '../errors/SuppressedError';
 
 export const errorHandlerMiddleware = (err: Error, req: Request, res: Response, next: NextFunction): Response => {
   if (err instanceof ExposableError) {
+    if (!err.message && !Object.keys(err.errors).length) {
+      return res.sendStatus(err.statusCode);
+    }
+  
+    return res.status(err.statusCode).json({
+      message: err.message,
+      ...(Object.keys(err.errors).length && { errors: err.errors }),
+    }).end();
+  }
+
+  if (err instanceof SuppressedError) {
     return res.status(err.statusCode).end();
   }
 

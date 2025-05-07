@@ -4,5 +4,11 @@ node_modules
 # Build folder
 dist
 
+# Environment variables
+.env
+
 # Code editor
 .vscode
+
+# Test results
+coverage
